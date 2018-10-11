@@ -2,6 +2,9 @@ package grafos;
 
 import static org.junit.Assert.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.Test;
 
 public class GrafoTest {
@@ -66,5 +69,32 @@ public class GrafoTest {
 			g.agregarArista(2, 2);
 		}
 		
-
+		@Test(expected = IllegalArgumentException.class)
+		public void conjuntoNuloTest() {
+			Grafo g = new Grafo(5);
+			g.esClique(null);			
+		}
+		
+		@Test
+		public void cliqueVaciaTest() {
+			Grafo g = new Grafo(5);
+			Set<Integer> set = new HashSet();
+			assertTrue(g.esClique(set));
+		}
+		
+		@Test
+		public void cliqueUnitarioTest() {
+			Grafo g = new Grafo(5);
+			Set<Integer> set = new HashSet();
+			set.add(2);
+			assertTrue(g.esClique(set));
+		}
+		
+		@Test(expected = IllegalArgumentException.class)
+		public void verticeNegativoTest() {
+			Grafo g = new Grafo(5);
+			Set<Integer> set = new HashSet<Integer>();
+			set.add(-1);
+			assertFalse(g.esClique(set));
+		}
 }

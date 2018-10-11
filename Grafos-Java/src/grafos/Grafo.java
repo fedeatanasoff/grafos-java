@@ -72,4 +72,20 @@ public class Grafo {
 		return vecinos;		
 	}
 
+	public boolean esClique(Set<Integer> conjunto) {
+		if(conjunto == null) {
+			throw new IllegalArgumentException("el conjunto no puede ser nulo!");
+		}
+		
+		for (Integer i : conjunto)
+			verificarVertice(i);
+
+		for (Integer i : conjunto)
+			for (Integer j : conjunto)
+				if (i != j) {
+					if (existeArista(i, j) == false)
+						return false;
+				}		
+		return true;
+	}
 }
