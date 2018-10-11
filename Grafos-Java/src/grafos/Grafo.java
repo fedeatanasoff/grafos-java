@@ -1,5 +1,8 @@
 package grafos;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Grafo {
 	
 	private boolean[][] _ady;
@@ -45,6 +48,28 @@ public class Grafo {
 		if( i == j) {
 			throw new IllegalArgumentException("se intento agregar una arista con dos vertices iguales!");
 		}
+	}
+	
+	public int grado(int i) {
+		verificarVertice(i);
+		int grado = 0;
+		for (int j = 0; j < vertices(); j++) {
+			if (this._ady[i][j] == true) {
+				++grado;
+			}
+		}
+		return grado;
+	}
+	
+	public Set<Integer> vecinos(int i){
+		verificarVertice(i);
+		
+		Set<Integer> vecinos = new HashSet<Integer>();
+		for( int j=0; j < vertices(); j++) {
+			if (this._ady[i][j])
+				vecinos.add(j);
+		}
+		return vecinos;		
 	}
 
 }
