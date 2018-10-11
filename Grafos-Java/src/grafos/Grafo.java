@@ -10,17 +10,7 @@ public class Grafo {
 	
 	public void agregarArista(int i, int j) {
 		
-		if( i < 0 || i >= vertices() ) {
-			throw new IllegalArgumentException("se intento agregar una arista con un vertice invalido! ("+i+")");
-		}
-		
-		if( j < 0 || j >= vertices() ) {
-			throw new IllegalArgumentException("se intento agregar una arista con un vertice invalido! ("+j+")");
-		}
-		
-		if( i == j) {
-			throw new IllegalArgumentException("se intento agregar una arista con dos vertices iguales!");
-		}
+		verificarArista(i, j);		
 		
 		this._ady[i][j] = true;
 		this._ady[j][i] = true;
@@ -37,6 +27,24 @@ public class Grafo {
 	
 	public int vertices() {
 		return this._ady.length;
+	}
+	
+	private void verificarArista(int i, int j) {
+		verificarVertice(i);
+		verificarVertice(j);
+		verificarDistintos(i, j);
+	}
+	
+	private void verificarVertice(int i) {
+		if( i < 0 || i >= vertices() ) {
+			throw new IllegalArgumentException("se intento agregar una arista con un vertice invalido! ("+i+")");
+		}
+	}
+	
+	private void verificarDistintos(int i, int j) {
+		if( i == j) {
+			throw new IllegalArgumentException("se intento agregar una arista con dos vertices iguales!");
+		}
 	}
 
 }
