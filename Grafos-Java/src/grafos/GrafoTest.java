@@ -78,14 +78,14 @@ public class GrafoTest {
 		@Test
 		public void cliqueVaciaTest() {
 			Grafo g = new Grafo(5);
-			Set<Integer> set = new HashSet();
+			Set<Integer> set = new HashSet<Integer>();
 			assertTrue(g.esClique(set));
 		}
 		
 		@Test
 		public void cliqueUnitarioTest() {
 			Grafo g = new Grafo(5);
-			Set<Integer> set = new HashSet();
+			Set<Integer> set = new HashSet<Integer>();
 			set.add(2);
 			assertTrue(g.esClique(set));
 		}
@@ -97,4 +97,75 @@ public class GrafoTest {
 			set.add(-1);
 			assertFalse(g.esClique(set));
 		}
+		
+		@Test(expected = IllegalArgumentException.class)
+		public void verticeExcedidoTest() {
+			Grafo g = new Grafo(5);
+			Set<Integer> set = new HashSet<Integer>();
+			set.add(5);
+			g.esClique(set);
+		}
+		
+		@Test //(expected = IllegalArgumentException.class)
+		public void dosNoVecinosTest() {
+			Grafo g = new Grafo(5);
+			Set<Integer> set = new HashSet<Integer>();
+			set.add(3);
+			set.add(4);
+			g.esClique(set);
+		}
+		
+		@Test
+		public void dosVecinosTest()
+		{
+			Grafo grafo = K4ConAntena();
+			
+			Set<Integer> set = new HashSet<Integer>();
+			set.add(3);
+			set.add(2);
+			
+			assertTrue( grafo.esClique(set) );
+		}
+		
+		@Test
+		public void casiTrianguloTest()
+		{
+			Grafo grafo = K4ConAntena();
+			
+			Set<Integer> set = new HashSet<Integer>();
+			set.add(2);
+			set.add(3);
+			set.add(4);
+			
+			assertFalse( grafo.esClique(set) );
+		}
+		
+		@Test
+		public void cliqueDe4Test()
+		{
+			Grafo grafo = K4ConAntena();
+			
+			Set<Integer> set = new HashSet<Integer>();
+			set.add(0);
+			set.add(2);
+			set.add(3);
+			set.add(1);
+			
+			assertTrue( grafo.esClique(set) );
+		}
+
+		private Grafo K4ConAntena()
+		{
+			Grafo ret = new Grafo(5);
+			ret.agregarArista(0, 1);
+			ret.agregarArista(0, 2);
+			ret.agregarArista(0, 3);
+			ret.agregarArista(1, 2);
+			ret.agregarArista(1, 3);
+			ret.agregarArista(2, 3);
+			ret.agregarArista(2, 4);
+			
+			return ret;
+		}
+
 }
