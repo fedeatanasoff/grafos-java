@@ -76,18 +76,21 @@ public class GrafoTest {
 		}
 		
 		@Test
-		public void cliqueVaciaTest() {
-			Grafo g = new Grafo(5);
-			Set<Integer> set = new HashSet<Integer>();
-			assertTrue(g.esClique(set));
+		public void cliqueVaciaTest()
+		{
+			Grafo grafo = new Grafo(5);
+			int[] vertices = { };
+			assertTrue( grafo.esClique( toSet(vertices)) );
 		}
-		
+
 		@Test
-		public void cliqueUnitarioTest() {
-			Grafo g = new Grafo(5);
+		public void cliqueUnitariaTest()
+		{
+			Grafo grafo = new Grafo(5);
 			int[] vertices = { 2 };
-			assertTrue( g.esClique( toSet(vertices) ) );
+			assertTrue( grafo.esClique( toSet(vertices) ) );
 		}
+
 		
 		@Test(expected = IllegalArgumentException.class)
 		public void verticeNegativoTest() {
