@@ -85,73 +85,59 @@ public class GrafoTest {
 		@Test
 		public void cliqueUnitarioTest() {
 			Grafo g = new Grafo(5);
-			Set<Integer> set = new HashSet<Integer>();
-			set.add(2);
-			assertTrue(g.esClique(set));
+			int[] vertices = { 2 };
+			assertTrue( g.esClique( toSet(vertices) ) );
 		}
 		
 		@Test(expected = IllegalArgumentException.class)
 		public void verticeNegativoTest() {
 			Grafo g = new Grafo(5);
-			Set<Integer> set = new HashSet<Integer>();
-			set.add(-1);
-			assertFalse(g.esClique(set));
+			int[] vertices = { -1 };
+			g.esClique( toSet(vertices) );
+
 		}
 		
 		@Test(expected = IllegalArgumentException.class)
 		public void verticeExcedidoTest() {
 			Grafo g = new Grafo(5);
-			Set<Integer> set = new HashSet<Integer>();
-			set.add(5);
-			g.esClique(set);
+			int[] vertices = { 5 };
+			g.esClique( toSet(vertices) );
+
 		}
 		
 		@Test //(expected = IllegalArgumentException.class)
 		public void dosNoVecinosTest() {
 			Grafo g = new Grafo(5);
-			Set<Integer> set = new HashSet<Integer>();
-			set.add(3);
-			set.add(4);
-			g.esClique(set);
+			int[] vertices = { 3, 4 };
+			assertFalse( g.esClique( toSet(vertices) ) );
+
 		}
 		
 		@Test
 		public void dosVecinosTest()
 		{
-			Grafo grafo = K4ConAntena();
-			
-			Set<Integer> set = new HashSet<Integer>();
-			set.add(3);
-			set.add(2);
-			
-			assertTrue( grafo.esClique(set) );
+			Grafo grafo = K4ConAntena();			
+			int[] vertices = { 2, 3 };
+			assertTrue( grafo.esClique( toSet(vertices) ) );
+
 		}
 		
 		@Test
 		public void casiTrianguloTest()
 		{
 			Grafo grafo = K4ConAntena();
-			
-			Set<Integer> set = new HashSet<Integer>();
-			set.add(2);
-			set.add(3);
-			set.add(4);
-			
-			assertFalse( grafo.esClique(set) );
+			int[] vertices = { 2, 3, 4 };
+			assertFalse( grafo.esClique( toSet(vertices) ) );
+
 		}
 		
 		@Test
 		public void cliqueDe4Test()
 		{
 			Grafo grafo = K4ConAntena();
-			
-			Set<Integer> set = new HashSet<Integer>();
-			set.add(0);
-			set.add(2);
-			set.add(3);
-			set.add(1);
-			
-			assertTrue( grafo.esClique(set) );
+			int[] vertices = { 0, 1, 2, 3 };
+			assertTrue( grafo.esClique( toSet(vertices) ) );
+
 		}
 
 		private Grafo K4ConAntena()
@@ -167,5 +153,15 @@ public class GrafoTest {
 			
 			return ret;
 		}
+		
+		private Set<Integer> toSet(int[] arreglo)
+		{
+			Set<Integer> ret = new HashSet<Integer>();
+			for(int i=0; i<arreglo.length; ++i)
+				ret.add( arreglo[i] );
+			
+			return ret;
+		}
+
 
 }
