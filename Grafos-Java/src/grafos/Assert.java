@@ -8,8 +8,12 @@ import org.junit.Test;
 
 public class Assert {
 
-	public static void iguales(int[] esperado, Set<Integer> conjunto) {
-		fail("no implementado");
+	public static void iguales(int[] esperado, Set<Integer> obtenido) {
+		assertEquals(esperado.length, obtenido.size());
+
+		for (Integer elemento : esperado)
+			assertTrue(obtenido.contains(elemento));
+
 	}
 
 }
