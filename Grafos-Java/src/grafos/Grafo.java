@@ -1,35 +1,40 @@
 package grafos;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 public class Grafo {
 	
-	private boolean[][] _ady;
+	private ArrayList<Set<Integer>> _vecinos;
 	
 	public Grafo(int vertices) {
-		this._ady = new boolean[vertices][vertices];
+		_vecinos = new ArrayList<Set<Integer>>(vertices);
+		
+		for(int i=0; i < vertices; i++) {
+			_vecinos.add(new HashSet<Integer>());
+		}
 	}
 	
 	public void agregarArista(int i, int j) {
 		
 		verificarArista(i, j);		
-		
-		this._ady[i][j] = true;
-		this._ady[j][i] = true;
+		_vecinos.get(i).add(j);
+		_vecinos.get(j).add(i);
 	}
 	
 	public void eliminarArista(int i, int j) {
-		this._ady[i][j] = false;
-		this._ady[j][i] = false;
+		_vecinos.get(i).remove(j);
+		_vecinos.get(j).remove(i);
 	}
 	
 	public boolean existeArista(int i, int j) {
-		return this._ady[i][j];
+		verificarArista(i, j);
+		return _vecinos.get(i).contains(j);
 	}
 	
 	public int vertices() {
-		return this._ady.length;
+		return _vecinos.size();
 	}
 	
 	private void verificarArista(int i, int j) {
@@ -52,24 +57,13 @@ public class Grafo {
 	
 	public int grado(int i) {
 		verificarVertice(i);
-		int grado = 0;
-		for (int j = 0; j < vertices(); j++) {
-			if (this._ady[i][j] == true) {
-				++grado;
-			}
-		}
-		return grado;
+		
+		return _vecinos.get(i).size();
 	}
 	
 	public Set<Integer> vecinos(int i){
 		verificarVertice(i);
-		
-		Set<Integer> vecinos = new HashSet<Integer>();
-		for( int j=0; j < vertices(); j++) {
-			if (this._ady[i][j])
-				vecinos.add(j);
-		}
-		return vecinos;		
+		return _vecinos.get(i);
 	}
 
 	public boolean esClique(Set<Integer> conjunto) {
