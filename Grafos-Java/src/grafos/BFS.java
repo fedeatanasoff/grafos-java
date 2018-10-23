@@ -1,5 +1,6 @@
 package grafos;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 public class BFS {
@@ -12,7 +13,22 @@ public class BFS {
 		return alcanzables(g,0).size() == g.vertices();	
 	}
 	
-	static Set<Integer> alcanzables(Grafo g, int origen){
-		throw new RuntimeException("no implementado");
+	static Set<Integer> alcanzables(Grafo g, int origen) {
+		inicializar(g, origen);
+
+		while (L.size() > 0) {
+			return marcados();
+
+		}
 	}
+	private static void inicializar(Grafo grafo, int origen) 
+	{
+		//Los vrtices pendientes de visitar
+		L = new ArrayList<Integer>();
+		L.add(origen);
+		
+		//Los vrtices visitados
+		marcados = new boolean[grafo.vertices()];	
+	}
+
 }
