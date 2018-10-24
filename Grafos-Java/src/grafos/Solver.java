@@ -13,12 +13,18 @@ public class Solver
 	}
 	
 	private int _generados;
+	private Set<Integer> _incumbente;
 	
-	public void generarTodosLosSubconjuntosDeVertices()
+	public Set<Integer> resolver()
 	{
 		_generados = 0;
+		_incumbente = new HashSet<Integer>();
+
 		Set<Integer> vacio = new HashSet<Integer>();
 		recursion(0, vacio);
+		
+		return _incumbente;
+
 	}
 	
 	private void recursion(int actual, Set<Integer> conjunto)
@@ -26,7 +32,10 @@ public class Solver
 		// Caso base
 		if( actual == _grafo.vertices() )
 		{
-			mostrar(conjunto);
+			// Caso base
+						if( _grafo.esClique(conjunto) && conjunto.size() > _incumbente.size() )
+							_incumbente = new HashSet<Integer>(conjunto);
+
 			_generados++;
 		}
 		else
@@ -45,7 +54,7 @@ public class Solver
 		return _generados;
 	}
 	
-	private void mostrar(Set<Integer> conjunto)
+	private static void mostrar(Set<Integer> conjunto)
 	{
 		System.out.print("{ ");
 		
@@ -57,10 +66,18 @@ public class Solver
 	
 	public static void main(String[] args)
 	{
-		Grafo grafo = new Grafo(16);
+		Grafo grafo = new Grafo(5);
+		grafo.agregarArista(0, 1);
+		grafo.agregarArista(0, 2);
+		grafo.agregarArista(1, 3);
+		grafo.agregarArista(3, 4);
+		grafo.agregarArista(2, 3);
+		grafo.agregarArista(2, 4);
+
 		
-		Solver solver = new Solver(grafo);
-		solver.generarTodosLosSubconjuntosDeVertices();
+		maxClique.Solver solver = new Solver(grafo);
+		Set<Integer> maxClique = solver.resolver();
+		mostrar(maxClique);
 		
 		System.out.println("Subconjuntos generados: " + solver.cantidadGenerada());
 	}
